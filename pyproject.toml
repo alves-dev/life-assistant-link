@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "life-assistant-link"
+version = "0.1.0"
+description = ""
+authors = ["igormoreiraalves <igor@biomainvestimentos.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = {extras = ["all"], version = "^0.109.0"}
+uvicorn = "^0.27.0.post1"
+python-dotenv = "^1.0.1"
+pydantic-settings = "^2.1.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
