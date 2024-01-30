@@ -3,6 +3,8 @@ from app.domain.zone import repository
 
 
 def launch_event(event: Event) -> bool:
+    send_broker(event)
+
     # only add
     if event.action == Action.CAME_IN:
         repository.add_event(event)
@@ -15,16 +17,21 @@ def launch_event(event: Event) -> bool:
         print(event.date)
         print(event.date - event_came_in.date)
 
-        send_broker(event_came_in, event)
+        send_broker_remained(event_came_in, event)
 
         repository.remove_event(event_came_in)
         return True
 
 
-def send_broker(event_came_in: Event, event_went_out: Event):
+def send_broker_remained(event_came_in: Event, event_went_out: Event):
     # https://github.com/alves-dev/life/blob/main/events/README.md#person_tracking
-    # aqui tenho que enviar o evento para o rabbitmq
-    event = {
+    # TODO: aqui tenho que enviar o evento para o rabbitmq
+    print(f'Send {event_came_in}')
+    pass
 
-    }
+
+def send_broker(event: Event):
+    # https://github.com/alves-dev/life/blob/main/events/README.md#person_tracking
+    # TODO: aqui tenho que enviar o evento para o rabbitmq
+    print(f'Send {event}')
     pass
