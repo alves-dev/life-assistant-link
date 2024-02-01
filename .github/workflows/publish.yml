@@ -23,14 +23,14 @@ jobs:
         name: Generate requirements.txt
         run: poetry export --without-hashes --format=requirements.txt > requirements.txt
       -
-        name: login gh
+        name: Login in ghcr
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       -
-        name: Build the hello-docker Docker image
+        name: Build and Push Docker image
         run: |
           docker build . --tag ghcr.io/alves-dev/life-assistant-link:latest
           docker push ghcr.io/alves-dev/life-assistant-link:latest

@@ -1,11 +1,11 @@
-FROM python:3.10-slim
+FROM python:3.12-slim
 
-COPY requirements.txt .
+COPY . /code
+WORKDIR /code
+
 RUN pip install -r requirements.txt
 RUN pip install gunicorn
 
-COPY app/config /code
-WORKDIR /code
+EXPOSE 3001
 
-#CMD uvicorn app.main:app --reload
-CMD gunicorn -k uvicorn.workers.UvicornWorker app.main:app -b 0.0.0.0:3001 -e TIMEOUT="300"
+CMD gunicorn -k uvicorn.workers.UvicornWorker app.main:app -b 0.0.0.0:3001
