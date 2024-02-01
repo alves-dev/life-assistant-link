@@ -14,7 +14,6 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: POKPOJPSDOVJ[S
       - name: Build the hello-docker Docker image
         run: |
           docker build . --tag ghcr.io/alves-dev/life-assistant-link:latest
