@@ -36,8 +36,4 @@ jobs:
         run: |
           docker buildx create --use --name mybuilder
           docker buildx build . --platform linux/amd64,linux/arm64 --tag ghcr.io/alves-dev/life-assistant-link:latest --push
-          if [[ "$(git log -1 --pretty=%B)" == *new image version* ]]; then
-            docker buildx build . --platform linux/amd64,linux/arm64 --tag ghcr.io/alves-dev/life-assistant-link:$(date +%Y%m%d%H%M%S) --push
-          else
-            export BUILD_IMAGE=false
-          fi
+          docker buildx build . --platform linux/amd64,linux/arm64 --tag ghcr.io/alves-dev/life-assistant-link:$(date +%Y%m%d) --push
