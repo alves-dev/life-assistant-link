@@ -16,6 +16,8 @@ jobs:
       -
         name: Set up python
         uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       -
         name: Install Poetry
         uses: snok/install-poetry@v1
@@ -34,7 +36,8 @@ jobs:
         run: |
           docker buildx create --use --name mybuilder
           docker buildx build . --platform linux/amd64,linux/arm64 --tag ghcr.io/alves-dev/life-assistant-link:latest --push
-#          docker build . --tag ghcr.io/alves-dev/life-assistant-link:latest
-#          docker push ghcr.io/alves-dev/life-assistant-link:latest
-#docker buildx build . --platform linux/amd64,linux/arm64,linux/arm/v7 --tag igor:latest
-#docker buildx build --platform linux/amd64,linux/arm64 --tag igor:latest .
+          if [[ "$(git log -1 --pretty=%B)" == *new image version* ]]; then
+            docker buildx build . --platform linux/amd64,linux/arm64 --tag ghcr.io/alves-dev/life-assistant-link:$(date +%Y%m%d%H%M%S) --push
+          else
+            export BUILD_IMAGE=false
+          fi
