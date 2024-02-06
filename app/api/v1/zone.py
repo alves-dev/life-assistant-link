@@ -23,7 +23,6 @@ def create_zone_event(event: ZoneEvent, authorized: bool = Depends(authenticatio
     """
     logging.info(f'Event from home assistant: {event}')
 
-    # TODO: validar o que realmente esta vindo do HA e alterar o if
     if event.action == 'enter':
         service.launch_event(Event(Action.CAME_IN, event.zone, event.person, datetime.now()))
     elif event.action == 'leave':
