@@ -3,22 +3,20 @@ import pika
 import json
 from app.config.setting import setting
 
+connection_parameters = pika.ConnectionParameters(
+            host=setting.BROKER_HOST,
+            port=setting.BROKER_PORT,
+            credentials=pika.PlainCredentials(setting.BROKER_USERNAME, setting.BROKER_PASSWORD)
+        )
+connection = pika.BlockingConnection(connection_parameters)
+
+
 class RabbitMQ():
-    def __init__(self, host=setting.BROKER_HOST, port=setting.BROKER_PORT, username=setting.BROKER_USERNAME,
-                 password=setting.BROKER_PASSWORD, exchange=setting.BROKER_EXCHANGE, routing_key=setting.BROKER_ROUTING_KEY):
-        self.host = host
-        self.port = port
-        self.exchange = exchange
-        self.credentials = pika.PlainCredentials(username, password)
-        self.routing_key = routing_key
+    def __init__(self):
+        self.exchange = setting.BROKER_EXCHANGE
+        self.routing_key = setting.BROKER_ROUTING_KEY
+        self.channel = connection.channel()
 
     def send(self, message: dict):
-        connection_parameters = pika.ConnectionParameters(
-            host=self.host,
-            port=self.port,
-            credentials=self.credentials
-        )
-        connection = pika.BlockingConnection(connection_parameters)
-        channel = connection.channel()
-        channel.basic_publish(exchange=self.exchange, routing_key=self.routing_key, body=json.dumps(message))
-        connection.close()
+        self.channel.basic_publish(exchange=self.exchange, routing_key=self.routing_key, body=json.dumps(message))
+        self.channel.close()
