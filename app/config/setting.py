@@ -13,6 +13,14 @@ class Settings(BaseSettings):
     # HA
     PERSON_UUIDS: dict
 
+    # broker RabbitMQ
+    BROKER_HOST: str
+    BROKER_PORT: int
+    BROKER_USERNAME: str
+    BROKER_PASSWORD: str
+    BROKER_EXCHANGE: str
+    BROKER_ROUTING_KEY: str
+
     model_config = SettingsConfigDict(
         env_file=".env", env_file_encoding="utf-8", extra="ignore"
     )
