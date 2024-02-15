@@ -1,7 +1,9 @@
 import logging
+
 from app.config.setting import setting
 from app.domain.zone import repository
 from app.domain.zone.event import Event, Action
+from app.infrastructure.broker import RabbitMQ
 
 
 def launch_event(event: Event) -> bool:
@@ -23,23 +25,22 @@ def launch_event(event: Event) -> bool:
 
 def send_broker_remained(event_came_in: Event, event_went_out: Event):
     # https://github.com/alves-dev/life/blob/main/events/README.md#person_tracking
-    # TODO: aqui tenho que enviar o evento para o rabbitmq
-    event = parser_event_remained(event_came_in, event_went_out)
-    logging.info(event)
-    if event.get('person_id') is None:
+    event_broker = parser_event_remained(event_came_in, event_went_out)
+    logging.info(event_broker)
+    if event_broker.get('person_id') is None:
         logging.info(f'Person [{event_came_in.person}] not found, event will not be sent!')
         return None
-    pass
+    RabbitMQ().send(event_broker)
 
 
 def send_broker(event: Event):
     # https://github.com/alves-dev/life/blob/main/events/README.md#person_tracking
-    # TODO: aqui tenho que enviar o evento para o rabbitmq
-    logging.info(parser_event(event))
-    if parser_event(event).get('person_id') is None:
+    event_broker = parser_event(event)
+    logging.info(event_broker)
+    if event_broker.get('person_id') is None:
         logging.info(f'Person [{event.person}] not found, event will not be sent!')
         return None
-    pass
+    RabbitMQ().send(event_broker)
 
 
 def parser_event(event: Event) -> dict | None:
