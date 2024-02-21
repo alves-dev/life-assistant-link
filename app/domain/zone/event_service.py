@@ -47,7 +47,7 @@ def parser_event(event: Event) -> dict | None:
     return {
         "type": "PERSON_TRACKING",
         "person_id": setting.PERSON_UUIDS.get(event.person, None),
-        "datetime": event.date.__str__().replace(' ', 'T') + 'Z',
+        "datetime": event.date.__str__().replace(' ', 'T') + '-03:00',
         "action": event.action.name,
         "local": event.zone,
         "origin": "Home assistant"
@@ -58,7 +58,7 @@ def parser_event_remained(event_came_in: Event, event_went_out: Event) -> dict |
     return {
         "type": "PERSON_TRACKING",
         "person_id": setting.PERSON_UUIDS.get(event_came_in.person, None),
-        "datetime": event_came_in.date.__str__().replace(' ', 'T') + 'Z',
+        "datetime": event_came_in.date.__str__().replace(' ', 'T') + '-03:00',
         "action": 'REMAINED',
         "local": event_went_out.zone,
         "minutes": (event_went_out.date - event_came_in.date).seconds / 60,
