@@ -28,7 +28,7 @@ jobs:
 #          pip install pytest
 
       - name: Upload requirements
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: requirements
           path: requirements.txt
@@ -43,7 +43,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Download requirements
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: requirements
 
