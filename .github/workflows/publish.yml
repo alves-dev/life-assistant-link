@@ -13,10 +13,13 @@ jobs:
         with:
           python-version: '3.12'
       - name: Pytest
-        run: pytest
+        run: |
+          pip install pytest
+          pytest
 
   publish-docker-image:
     runs-on: ubuntu-latest
+    needs: test
     permissions:
       contents: read
       packages: write
