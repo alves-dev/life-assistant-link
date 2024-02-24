@@ -23,9 +23,9 @@ jobs:
           pip install poetry
           poetry install
           poetry run pytest
-#          poetry export --without-hashes --format=requirements.txt > requirements.txt
-#          pip install -r requirements.txt
-#          pip install pytest
+
+      - name: Generate requirements.txt
+        run: poetry export --without-hashes --format=requirements.txt > requirements.txt
 
       - name: Upload requirements
         uses: actions/upload-artifact@v4
