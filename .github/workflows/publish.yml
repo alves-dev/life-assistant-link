@@ -20,6 +20,7 @@ jobs:
 
       - name: Pytest
         run: |
+          pip install pytest
           poetry run pytest
 
   publish-docker-image:
