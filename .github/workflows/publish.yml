@@ -18,7 +18,10 @@ jobs:
 
       - name: Pytest
         run: |
+          pwd
+          ls
           poetry shell
+          echo `igor`
           pytest
 
   publish-docker-image:
