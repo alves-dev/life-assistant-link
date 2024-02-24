@@ -25,6 +25,12 @@ jobs:
           pip install pytest
           poetry run pytest
 
+      - name: Upload requirements
+        uses: actions/upload-artifact@v2
+        with:
+          name: requirements
+          path: requirements.txt
+
   publish-docker-image:
     runs-on: ubuntu-latest
     needs: test
@@ -34,16 +40,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up python
-        uses: actions/setup-python@v5
+      - name: Download requirements
+        uses: actions/download-artifact@v2
         with:
-          python-version: '3.12'
+          name: requirements
 
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
-
-      - name: Generate requirements.txt
-        run: poetry export --without-hashes --format=requirements.txt > requirements.txt
+#      - name: Set up python
+#        uses: actions/setup-python@v5
+#        with:
+#          python-version: '3.12'
+#
+#      - name: Install Poetry
+#        uses: snok/install-poetry@v1
+#
+#      - name: Generate requirements.txt
+#        run: poetry export --without-hashes --format=requirements.txt > requirements.txt
 
       - name: Login in ghcr
         uses: docker/login-action@v3
