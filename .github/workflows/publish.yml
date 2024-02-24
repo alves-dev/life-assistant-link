@@ -20,10 +20,10 @@ jobs:
 
       - name: Pytest
         run: |
+          poetry run pytest
 #          poetry export --without-hashes --format=requirements.txt > requirements.txt
 #          pip install -r requirements.txt
 #          pip install pytest
-          poetry run pytest
 
       - name: Upload requirements
         uses: actions/upload-artifact@v2
