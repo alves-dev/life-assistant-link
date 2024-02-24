@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime
 
 from app.config.setting import setting
 from app.domain.zone import repository
@@ -47,7 +48,7 @@ def parser_event(event: Event) -> dict | None:
     return {
         "type": "PERSON_TRACKING",
         "person_id": setting.PERSON_UUIDS.get(event.person, None),
-        "datetime": event.date.__str__().replace(' ', 'T') + '-03:00',
+        "datetime": transform_date(event.date),
         "action": event.action.name,
         "local": event.zone,
         "origin": "Home assistant"
@@ -58,9 +59,13 @@ def parser_event_remained(event_came_in: Event, event_went_out: Event) -> dict |
     return {
         "type": "PERSON_TRACKING",
         "person_id": setting.PERSON_UUIDS.get(event_came_in.person, None),
-        "datetime": event_came_in.date.__str__().replace(' ', 'T') + '-03:00',
+        "datetime": transform_date(event_came_in.date),
         "action": 'REMAINED',
         "local": event_went_out.zone,
         "minutes": (event_went_out.date - event_came_in.date).seconds / 60,
         "origin": "Home assistant"
     }
+
+
+def transform_date(date: datetime) -> str:
+    return date.__str__().replace(' ', 'T') + '-03:00'

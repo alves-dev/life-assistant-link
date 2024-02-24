@@ -19,7 +19,7 @@ class ZoneEvent(BaseModel):
 @zone_event.post("/zone-event", status_code=201, responses={401: {"description": "Unauthorized"}})
 def create_zone_event(event: ZoneEvent, authorized: bool = Depends(authentication)) -> str:
     """
-    Recebe um 'ZoneEvent' e lança um 'Event'
+    Receives a 'ZoneEvent' and transforms it into an 'Event'
     """
     logging.info(f'Event from home assistant: {event}')
 

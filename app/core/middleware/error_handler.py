@@ -38,7 +38,7 @@ class ResponseException(Exception):
 
     @classmethod
     def unauthorized(cls, error="Unauthorized"):
-        logger.info(f"Unathorized raised: {error}")
+        logger.info(f"Unauthorized raised: {error}")
         return cls(ErrorModel(error=error), 401)
 
     @classmethod

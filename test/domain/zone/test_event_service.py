@@ -1,6 +1,7 @@
-from app.domain.zone.event import Event, Action
-from app.domain.zone import event_service as service
 from datetime import datetime, timedelta
+
+from app.domain.zone import event_service as service
+from app.domain.zone.event import Event, Action
 
 
 def test_launch_event():
@@ -60,3 +61,11 @@ def test_parser_event_remained():
         "origin": "Home assistant"
     }
     assert expected == result
+
+
+def test_transform_date():
+    date = datetime.today() - timedelta(hours=1)
+
+    date_str = service.transform_date(date)
+    date_result = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S.%f-03:00')
+    assert date == date_result
