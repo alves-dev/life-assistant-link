@@ -20,8 +20,7 @@ jobs:
 
       - name: Pytest
         run: |
-          poetry export --without-hashes --format=requirements.txt > requirements.txt
-          pip install -r requirements.txt
+          poetry shell
           pytest
 
   publish-docker-image:
