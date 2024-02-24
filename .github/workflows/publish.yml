@@ -20,8 +20,7 @@ jobs:
 
       - name: Pytest
         run: |
-          poetry shell
-          pytest
+          poetry run pytest
 
   publish-docker-image:
     runs-on: ubuntu-latest
