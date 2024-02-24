@@ -1,5 +1,6 @@
 import dotenv
 from pydantic_settings import BaseSettings, SettingsConfigDict
+import uuid
 
 
 class Settings(BaseSettings):
@@ -8,7 +9,7 @@ class Settings(BaseSettings):
     SWAGGER_ENABLED: bool = True
 
     # Security
-    API_KEY: str
+    API_KEY: str = uuid.uuid4().__str__()
 
     # HA
     PERSON_UUIDS: dict

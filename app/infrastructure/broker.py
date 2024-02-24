@@ -10,7 +10,7 @@ connection_parameters = pika.ConnectionParameters(
 )
 
 
-class RabbitMQ():
+class RabbitMQ:
     def __init__(self):
         self.exchange = setting.BROKER_EXCHANGE
         self.routing_key = setting.BROKER_ROUTING_KEY

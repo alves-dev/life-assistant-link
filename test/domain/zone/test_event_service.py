@@ -3,7 +3,7 @@ from app.domain.zone import event_service as service
 from datetime import datetime, timedelta
 
 
-def test_repository():
+def test_launch_event():
     date_a = datetime.today() - timedelta(hours=1)
     date_b = datetime.today()
 
@@ -12,3 +12,51 @@ def test_repository():
 
     assert service.launch_event(event_a)
     assert service.launch_event(event_b)
+
+
+def test_send_broker():
+    date_a = datetime.today() - timedelta(hours=1)
+    date_b = datetime.today()
+
+    event_a = Event(Action.CAME_IN, 'house', 'joao', date_a)
+    event_b = Event(Action.WENT_OUT, 'house', 'joao', date_b)
+
+    service.send_broker(event_a)
+    service.send_broker_remained(event_a, event_b)
+
+
+def test_parser_event():
+    date = datetime.today()
+    event = Event(Action.CAME_IN, 'house', 'joao', date)
+    result = service.parser_event(event)
+
+    expected = {
+        "type": "PERSON_TRACKING",
+        "person_id": None,
+        "datetime": date.__str__().replace(' ', 'T') + '-03:00',
+        "action": "CAME_IN",
+        "local": "house",
+        "origin": "Home assistant"
+    }
+    assert expected == result
+
+
+def test_parser_event_remained():
+    date_a = datetime.today() - timedelta(hours=1)
+    date_b = datetime.today()
+
+    event_a = Event(Action.CAME_IN, 'house', 'joao', date_a)
+    event_b = Event(Action.WENT_OUT, 'house', 'joao', date_b)
+
+    result = service.parser_event_remained(event_a, event_b)
+
+    expected = {
+        "type": "PERSON_TRACKING",
+        "person_id": None,
+        "datetime": date_a.__str__().replace(' ', 'T') + '-03:00',
+        "action": "REMAINED",
+        "local": "house",
+        "minutes": 60,
+        "origin": "Home assistant"
+    }
+    assert expected == result
