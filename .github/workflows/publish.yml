@@ -20,8 +20,8 @@ jobs:
         run: |
           pwd
           ls
-          poetry shell
           echo `igor`
+          poetry shell
           pytest
 
   publish-docker-image:
