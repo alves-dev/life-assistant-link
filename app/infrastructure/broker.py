@@ -1,6 +1,7 @@
 import json
 
 import pika
+
 from app.config.setting import setting
 
 connection_parameters = pika.ConnectionParameters(

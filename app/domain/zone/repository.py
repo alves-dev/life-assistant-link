@@ -20,4 +20,8 @@ def find_event_came_in_by_went_out(event: Event) -> Event | None:
 
 
 def get_all() -> list[Event]:
-    return event_list
+    return event_list.copy()
+
+
+def clear():
+    event_list.clear()
