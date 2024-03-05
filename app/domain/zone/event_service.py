@@ -1,6 +1,8 @@
 import logging
 from datetime import datetime
 
+from fastapi import HTTPException
+
 from app.config.setting import setting
 from app.domain.zone import repository
 from app.domain.zone.event import Event, Action
@@ -31,7 +33,11 @@ def send_broker_remained(event_came_in: Event, event_went_out: Event):
     if event_broker.get('person_id') is None:
         logging.info(f'Person [{event_came_in.person}] not found, event will not be sent!')
         return None
-    RabbitMQ().send(event_broker)
+
+    try:
+        RabbitMQ().send(event_broker)
+    except ConnectionError:
+        raise HTTPException(status_code=503, detail="Connection to rabbitmq not established")
 
 
 def send_broker(event: Event):
@@ -41,7 +47,11 @@ def send_broker(event: Event):
     if event_broker.get('person_id') is None:
         logging.info(f'Person [{event.person}] not found, event will not be sent!')
         return None
-    RabbitMQ().send(event_broker)
+
+    try:
+        RabbitMQ().send(event_broker)
+    except:
+        raise HTTPException(status_code=503, detail="Connection to rabbitmq not established")
 
 
 def parser_event(event: Event) -> dict | None:
