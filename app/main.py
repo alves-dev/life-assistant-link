@@ -45,7 +45,7 @@ def generic_exception_handler(_: Request, _exc: Exception) -> Response:
 app.include_router(zone_event, prefix="/api/v1")
 
 
-@app.get("/api/v1/")
+@app.get("/api/v1/health")
 def healthcheck() -> Response:
     return JSONResponse(
         status_code=200,

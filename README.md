@@ -45,8 +45,4 @@ poetry install # para instalar as dependências
 uvicorn app.main:app # para iniciar a API no ambiente de DEV
 ```
 
-##### Configure as variáveis em:
-`/main/src/main/resources/application.yml`
-
 ### Ou acesse [aqui](https://github.com/alves-dev/posts/tree/main/2024/stack-life-python-kotlin) para ver o projeto funcionando juntamente com outros componentes
-
