@@ -6,8 +6,8 @@ import pytest
 from testcontainers.rabbitmq import RabbitMqContainer
 
 from app.config.setting import setting
-from app.domain.zone import event_service as service
-from app.domain.zone.event import Event, Action
+from app.domain.zone import zone_service as service
+from app.domain.zone.event import PersonTrackingEvent, Action
 from app.infrastructure import broker
 
 
@@ -32,15 +32,16 @@ class TestRabbitMQ:
         channel.exchange_declare(exchange=setting.BROKER_EXCHANGE, exchange_type='direct', durable=True)
         queue_name = 'test_queue'
         channel.queue_declare(queue=queue_name, durable=True)
-        channel.queue_bind(exchange=setting.BROKER_EXCHANGE, queue=queue_name, routing_key=setting.BROKER_ROUTING_KEY)
+        channel.queue_bind(exchange=setting.BROKER_EXCHANGE, queue=queue_name,
+                           routing_key=setting.BROKER_ROUTING_KEY_TRACKING)
 
         setting.PERSON_UUIDS = {"joao": "fecaa5bf-d219-4462-b528-3bf2ccae65b4"}
 
         date_a = datetime.today() - timedelta(hours=1)
         date_b = datetime.today()
 
-        event_a = Event(Action.CAME_IN, 'house', 'joao', date_a)
-        event_b = Event(Action.WENT_OUT, 'house', 'joao', date_b)
+        event_a = PersonTrackingEvent(Action.CAME_IN, 'house', 'joao', date_a)
+        event_b = PersonTrackingEvent(Action.WENT_OUT, 'house', 'joao', date_b)
 
         service.launch_event(event_a)
         service.launch_event(event_b)
@@ -51,7 +52,7 @@ class TestRabbitMQ:
 
         assert 'PERSON_TRACKING' == result['type']
         assert 'fecaa5bf-d219-4462-b528-3bf2ccae65b4' == result['person_id']
-        assert service.transform_date(date_a) == result['datetime']
+        assert service._transform_date(date_a) == result['datetime']
         assert 'CAME_IN' == result['action']
         assert 'house' == result['local']
         assert 'Home assistant' == result['origin']
@@ -62,7 +63,7 @@ class TestRabbitMQ:
 
         assert 'PERSON_TRACKING' == result['type']
         assert 'fecaa5bf-d219-4462-b528-3bf2ccae65b4' == result['person_id']
-        assert service.transform_date(date_b) == result['datetime']
+        assert service._transform_date(date_b) == result['datetime']
         assert 'WENT_OUT' == result['action']
         assert 'house' == result['local']
         assert 'Home assistant' == result['origin']
@@ -73,7 +74,7 @@ class TestRabbitMQ:
 
         assert 'PERSON_TRACKING' == result['type']
         assert 'fecaa5bf-d219-4462-b528-3bf2ccae65b4' == result['person_id']
-        assert service.transform_date(date_a) == result['datetime']
+        assert service._transform_date(date_a) == result['datetime']
         assert 'REMAINED' == result['action']
         assert 'house' == result['local']
         assert 60 == result['minutes']

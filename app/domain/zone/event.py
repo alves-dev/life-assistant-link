@@ -7,7 +7,7 @@ class Action(Enum):
     WENT_OUT = 2
 
 
-class Event:
+class PersonTrackingEvent:
     def __init__(self, action: Action, zone: str, person: str, date: datetime):
         self.action = action
         self.zone = zone
@@ -15,4 +15,4 @@ class Event:
         self.date = date
 
     def __str__(self):
-        return f"Event(action={self.action}, zone={self.zone}, person={self.person}, date={self.date})"
+        return f"PersonTrackingEvent(action={self.action}, zone={self.zone}, person={self.person}, date={self.date})"

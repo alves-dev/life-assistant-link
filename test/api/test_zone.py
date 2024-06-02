@@ -14,7 +14,7 @@ def test_create_zone_event_201():
         "person": "John Doe"
     }
 
-    response = client.post("/api/v1/zone-event", json=zone_event_data, headers={"api-key": API_KEY})
+    response = client.post("/api/v1/zone/event", json=zone_event_data, headers={"api-key": API_KEY})
     assert 201 == response.status_code
     assert "Created" == response.json()
 
@@ -26,7 +26,7 @@ def test_create_zone_event_api_key_invalid():
         "person": "John Doe"
     }
 
-    response = client.post("/api/v1/zone-event", json=zone_event_data,
+    response = client.post("/api/v1/zone/event", json=zone_event_data,
                            headers={"api-key": "invalid api-key"})
     assert 401 == response.status_code
     assert "API Key invalid" in response.text
@@ -39,6 +39,6 @@ def test_create_zone_event_400():
         "person": "John Doe"
     }
 
-    response = client.post("/api/v1/zone-event", json=zone_event_data, headers={"api-key": API_KEY})
+    response = client.post("/api/v1/zone/event", json=zone_event_data, headers={"api-key": API_KEY})
     assert 400 == response.status_code
     assert "Event action invalid" in response.text

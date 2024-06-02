@@ -1,15 +1,15 @@
 from datetime import datetime, timedelta
 
-from app.domain.zone import event_service as service
-from app.domain.zone.event import Event, Action
+from app.domain.zone import zone_service as service
+from app.domain.zone.event import PersonTrackingEvent, Action
 
 
 def test_launch_event():
     date_a = datetime.today() - timedelta(hours=1)
     date_b = datetime.today()
 
-    event_a = Event(Action.CAME_IN, 'house', 'joao', date_a)
-    event_b = Event(Action.WENT_OUT, 'house', 'joao', date_b)
+    event_a = PersonTrackingEvent(Action.CAME_IN, 'house', 'joao', date_a)
+    event_b = PersonTrackingEvent(Action.WENT_OUT, 'house', 'joao', date_b)
 
     assert service.launch_event(event_a)
     assert service.launch_event(event_b)
@@ -19,17 +19,17 @@ def test_send_broker():
     date_a = datetime.today() - timedelta(hours=1)
     date_b = datetime.today()
 
-    event_a = Event(Action.CAME_IN, 'house', 'joao', date_a)
-    event_b = Event(Action.WENT_OUT, 'house', 'joao', date_b)
+    event_a = PersonTrackingEvent(Action.CAME_IN, 'house', 'joao', date_a)
+    event_b = PersonTrackingEvent(Action.WENT_OUT, 'house', 'joao', date_b)
 
-    service.send_broker(event_a)
-    service.send_broker_remained(event_a, event_b)
+    service._send_broker(event_a)
+    service._send_broker_remained(event_a, event_b)
 
 
 def test_parser_event():
     date = datetime.today()
-    event = Event(Action.CAME_IN, 'house', 'joao', date)
-    result = service.parser_event(event)
+    event = PersonTrackingEvent(Action.CAME_IN, 'house', 'joao', date)
+    result = service._parser_event(event)
 
     expected = {
         "type": "PERSON_TRACKING",
@@ -46,10 +46,10 @@ def test_parser_event_remained():
     date_a = datetime.today() - timedelta(hours=1)
     date_b = datetime.today()
 
-    event_a = Event(Action.CAME_IN, 'house', 'joao', date_a)
-    event_b = Event(Action.WENT_OUT, 'house', 'joao', date_b)
+    event_a = PersonTrackingEvent(Action.CAME_IN, 'house', 'joao', date_a)
+    event_b = PersonTrackingEvent(Action.WENT_OUT, 'house', 'joao', date_b)
 
-    result = service.parser_event_remained(event_a, event_b)
+    result = service._parser_event_remained(event_a, event_b)
 
     expected = {
         "type": "PERSON_TRACKING",
@@ -66,6 +66,6 @@ def test_parser_event_remained():
 def test_transform_date():
     date = datetime.today() - timedelta(hours=1)
 
-    date_str = service.transform_date(date)
+    date_str = service._transform_date(date)
     date_result = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S.%f-03:00')
     assert date == date_result
