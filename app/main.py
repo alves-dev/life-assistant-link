@@ -1,12 +1,14 @@
 import logging
-import uvicorn
 
+import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from starlette.responses import Response
 
-from app.api.v1.zone import zone_event
+from app.api.food.food_controller import router as food_router
+from app.api.health_controller import router as health_router
+from app.api.zone.zone_controller import router as zone_router
 from app.config.setting import setting
 from app.core.middleware.error_handler import ResponseException
 
@@ -42,16 +44,9 @@ def generic_exception_handler(_: Request, _exc: Exception) -> Response:
     )
 
 
-app.include_router(zone_event, prefix="/api/v1")
-
-
-@app.get("/api/v1/health")
-def healthcheck() -> Response:
-    return JSONResponse(
-        status_code=200,
-        content={"status": True},
-    )
-
+app.include_router(zone_router)
+app.include_router(food_router)
+app.include_router(health_router)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

@@ -14,10 +14,16 @@ connection_parameters = pika.ConnectionParameters(
 class RabbitMQ:
     def __init__(self):
         self.exchange = setting.BROKER_EXCHANGE
-        self.routing_key = setting.BROKER_ROUTING_KEY
+        self.routing_key_tracking = setting.BROKER_ROUTING_KEY_TRACKING
+        self.routing_key_food = setting.BROKER_ROUTING_KEY_FOOD
         self.connection = pika.BlockingConnection(connection_parameters)
         self.channel = self.connection.channel()
 
-    def send(self, message: dict):
-        self.channel.basic_publish(exchange=self.exchange, routing_key=self.routing_key, body=json.dumps(message))
+    def send_tracking(self, message: dict):
+        self.channel.basic_publish(exchange=self.exchange, routing_key=self.routing_key_tracking,
+                                   body=json.dumps(message))
+        self.channel.close()
+
+    def send_food(self, message: dict):
+        self.channel.basic_publish(exchange=self.exchange, routing_key=self.routing_key_food, body=json.dumps(message))
         self.channel.close()

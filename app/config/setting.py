@@ -20,7 +20,8 @@ class Settings(BaseSettings):
     BROKER_USERNAME: str = 'username'
     BROKER_PASSWORD: str = 'password'
     BROKER_EXCHANGE: str = 'exchange'
-    BROKER_ROUTING_KEY: str = 'routing-key'
+    BROKER_ROUTING_KEY_TRACKING: str = 'routing-key'
+    BROKER_ROUTING_KEY_FOOD: str = 'routing-key'
 
     model_config = SettingsConfigDict(
         env_file=".env", env_file_encoding="utf-8", extra="ignore"

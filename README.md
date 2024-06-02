@@ -1,9 +1,9 @@
 # Assistant Link
 
-O projeto é uma API python cujo objetivo é receber um evento em uma rota
-e replicar este evento para o RabbitMQ com algumas alterações e regras:
+O projeto é uma API python cujo objetivo é receber eventos via http e replicar os mesmo para o RabbitMQ,
+com algumas alterações e regras:
 
-Exemplo de entrada na API:
+Exemplo `POST /api/v1/zone-event`:
 ```json
 {
   "zone": "HOME",
@@ -12,7 +12,7 @@ Exemplo de entrada na API:
 }
 ```
 
-Esse evento é registrado em memória e enviado para o RabbitMQ, quando um evento do tipo `"action": "leave"` 
+Esse evento é registrado em memória e enviado para o RabbitMQ, quando um evento do tipo `action = leave` 
 é recebido ele calcula o tempo em que a pessoa ficou na `zone` e envia um novo evento para o RabbitMQ.
 
 Exemplos de eventos enviados [aqui](https://github.com/alves-dev/life/tree/main/events#person_tracking-routing_key---person_tracking)
