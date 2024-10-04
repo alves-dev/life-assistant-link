@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "life-assistant-link"
-version = "0.1.0"
+version = "0.2.0"
 description = ""
 authors = ["igormoreiraalves <igor@biomainvestimentos.com>"]
 readme = "README.md"
