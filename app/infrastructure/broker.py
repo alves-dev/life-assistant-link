@@ -27,3 +27,14 @@ class RabbitMQ:
     def send_food(self, message: dict):
         self.channel.basic_publish(exchange=self.exchange, routing_key=self.routing_key_food, body=json.dumps(message))
         self.channel.close()
+
+
+class RabbitMQV2:
+    def __init__(self):
+        self.exchange = 'events.v2'
+        self.connection = pika.BlockingConnection(connection_parameters)
+        self.channel = self.connection.channel()
+
+    def send_food(self, message: dict):
+        self.channel.basic_publish(exchange=self.exchange, routing_key='health.nutri-track', body=json.dumps(message))
+        self.channel.close()

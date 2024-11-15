@@ -7,6 +7,7 @@ from fastapi.responses import JSONResponse
 from starlette.responses import Response
 
 from app.api.food.food_controller import router as food_router
+from app.api.food.food_controller import router_v2 as food_router_v2
 from app.api.health_controller import router as health_router
 from app.api.zone.zone_controller import router as zone_router
 from app.config.setting import setting
@@ -46,6 +47,7 @@ def generic_exception_handler(_: Request, _exc: Exception) -> Response:
 
 app.include_router(zone_router)
 app.include_router(food_router)
+app.include_router(food_router_v2)
 app.include_router(health_router)
 
 if __name__ == "__main__":
