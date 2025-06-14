@@ -1,4 +1,27 @@
-# Assistant Link
+<!--
+template_name=head
+template_version=v1
+-->
+
+<h1 align="center">Assistant Link</h1>
+
+<p align="center">
+  O projeto é uma API python cujo objetivo é receber eventos via http e replicar os mesmo para o RabbitMQ.<br>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/status-Finalizado-blue.svg" alt="status">
+</p>
+
+<p align="center">
+<img src="https://img.shields.io/badge/topics:-grey"> 
+<img src="https://img.shields.io/badge/python-lightgrey">
+<img src="https://img.shields.io/badge/rabbitmq-lightgrey">
+</p>
+
+<hr>
+
+
 
 O projeto é uma API python cujo objetivo é receber eventos via http e replicar os mesmo para o RabbitMQ,
 com algumas alterações e regras:
@@ -46,3 +69,15 @@ uvicorn app.main:app # para iniciar a API no ambiente de DEV
 ```
 
 ### Ou acesse [aqui](https://github.com/alves-dev/posts/tree/main/2024/stack-life-python-kotlin) para ver o projeto funcionando juntamente com outros componentes
+
+<!--
+template_name=footer
+template_version=v1
+-->
+
+---
+<p align="center">
+   <img src="https://img.shields.io/badge/licença-GPL%203-blue.svg" alt="license">
+</p>
+
+**Atualizado em:** 2025-06-14 15:18
