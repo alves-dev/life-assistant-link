@@ -1,0 +1,14 @@
+name: Readme Generate
+
+on:
+  push:
+    branches: main
+
+jobs:
+  tasks:
+    if: github.actor != 'readme-generate'
+    uses: alves-dev/actions/.github/workflows/readme-generate.yml@v1
+    with:
+      repo-name: ${{ github.repository }}
+    secrets:
+      PERSONAL_GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
