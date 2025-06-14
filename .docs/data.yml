@@ -1,0 +1,21 @@
+project:
+  title: &project_title Assistant Link
+  description: &project_description O projeto é uma API python cujo objetivo é receber eventos via http e replicar os mesmo para o RabbitMQ.
+  status: &project_status Finalizado # desenvolvimento, Finalizado
+  license: &project_license GPL-3 # GPL-3 MIT
+detail:
+  version: v1
+  description: *project_description
+  website:
+  topics: &topics
+    - python
+    - rabbitmq
+head:
+  version: v1
+  title: *project_title
+  description: *project_description
+  status: *project_status
+  topics: *topics
+footer:
+  version: v1
+  license: *project_license
