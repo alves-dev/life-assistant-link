@@ -1,6 +1,7 @@
 <!--
 template_name=head
 template_version=v1
+
 -->
 
 <h1 align="center">Assistant Link</h1>
