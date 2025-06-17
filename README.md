@@ -1,7 +1,6 @@
 <!--
 template_name=head
 template_version=v1
-
 -->
 
 <h1 align="center">Assistant Link</h1>
@@ -81,4 +80,4 @@ template_version=v1
    <img src="https://img.shields.io/badge/licença-GPL%203-blue.svg" alt="license">
 </p>
 
-**Atualizado em:** 2025-06-16 19:48
+**Atualizado em:** 2025-06-17 08:14
